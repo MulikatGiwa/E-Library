@@ -1,0 +1,160 @@
+USERS ENDPOINTS
+
+Users = {}
+
+user properties
+id
+name
+Email
+is_active: bool True
+
+#####################################################################################
+1.Create_User POST(/signup)
+input
+Fullname
+Email
+password
+confirm password
+
+output : {"message": "signup successful"}
+
+#####################################################################################
+
+2. Login POST(/login)
+input:
+username or Email
+password
+
+output: {"message": "Login Successful"}
+
+#####################################################################################
+
+3. Get Users GET(/users)
+input:
+
+output: {"data": users}
+
+#####################################################################################
+
+4. Get User by id GET(/users/{id})
+input: 
+id
+
+output: {"data": user}
+
+#####################################################################################
+
+5. Update User PUT(/users/{id})
+
+input: 
+id
+username
+
+#####################################################################################
+
+6. Deactivate user DELETE(/users/{id})
+input: id
+output : {"message": "Account deleted successfully"}
+
+#####################################################################################
+
+
+BOOK ENDPOINTS
+
+books = {}
+
+book properties
+id
+title
+Author
+is_available: bool Default=True
+
+#####################################################################################
+1.Register book POST(/books)
+id
+title
+author
+is_available
+
+output : {"message": "Book registered successfully"}
+
+#####################################################################################
+
+2. Get Books GET(/books)
+
+output: {"data": books}
+
+#####################################################################################
+
+3. Get book by id GET(/books/{id})
+id
+
+output: {"data": book}
+
+#####################################################################################
+
+4. Update Book PUT(/books/{id})
+input:
+id 
+title
+author
+
+output: {"message": "Book has been updated successfully" "data": updated_book}
+
+#####################################################################################
+
+5. Delete Book DELETE(/users/{id})
+input: id
+
+
+6. Unavailable book PATCH(/users/{id})
+input: id
+is_available bool false
+
+output: {"message": "Book has been marked unavailable"}
+
+#####################################################################################
+
+BORROW OPERATIONS ENDPOINTS
+
+borrow_records = {}
+
+borrow_records properties
+borrow_id
+user_id
+book_id
+borrow_date
+return_date
+
+1. Borrow book POST(/borrow/{user_id}/{book_id})
+borrow_id
+user_id
+book_id
+borrow_date
+is_available bool false
+
+# validate is_active bool True
+# validate is_available bool True
+# mark book is_available bool False
+# create borrow record
+
+output: {"message": "Book has been borrowed successfully", "data": borrow_record_id}
+
+2. Return book POST(/return/{user_id}/{book_id})
+borrow_id
+user_id
+book_id
+return_date
+is_available bool true
+output: {"message": "Book returned successfully", "data": borrow_record_id}
+
+BORROW RECORD MANAGEMENT ENDPOINTS
+
+1. Get borrow record by id GET(/borrow/records/{user_id})
+user_id
+
+output: {"data": borrow_record}
+
+2. get all borrow records GET(/borrow/records)
+
+output: {"data": borrow_records}
