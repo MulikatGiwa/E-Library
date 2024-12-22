@@ -12,7 +12,7 @@ class BorrowCrud:
         user = Users.get(record.user_id)
         if not user:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= "User not found")
-        if not user["is_active"] == True:
+        if not user.is_active == True:
             raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail= "Inactive user")
         book = Books.get(record.book_id)
         if not book:
