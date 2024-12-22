@@ -1,9 +1,9 @@
-from fastapi import APIRouter, HTTPException,status
-from typing import Annotated
+from fastapi import HTTPException,status
 from app.database.books import Books
 from app.schemas.books import Book, BookCreate, BookUpdate
 
 class BookCrud:
+    
     @staticmethod
     def create_book(book:BookCreate):
         for Id, book_data in Books.items():
@@ -34,16 +34,6 @@ class BookCrud:
             if key in updated_book:
                 updated_book[key] = values
             return updated_book
-        
-    @staticmethod
-    def mark_book_unavailable(book_id:int):
-        unavailable_book = Books.get(book_id)
-        if not unavailable_book:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= "Book not found")
-        if unavailable_book["is_available"] != True:
-                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail= "Book is not available")
-        unavailable_book["is_available"] = False
-        return unavailable_book
             
     @staticmethod
     def delete_book(book_id:int):

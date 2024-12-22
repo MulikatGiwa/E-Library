@@ -1,8 +1,4 @@
 from pydantic import BaseModel
-from uuid import UUID
-from app.utils.current_date import current_date
-from app.database.users import Users
-from typing import Optional
 from datetime import date
 
 class BorrowBase(BaseModel):

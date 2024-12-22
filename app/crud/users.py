@@ -4,12 +4,13 @@ from app.database.users import Users
 from typing import Annotated
 
 class UserCrud:
+
     @staticmethod
-    def signup(user:UserCreate, confirm_pasword: Annotated [str, Body()]):
+    def signup(user:UserCreate, confirm_password: Annotated [str, Body()]):
         for Id, user_data in Users.items():
             if  user_data["email"] == user.email:
                 raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already exists")
-        if user.password != confirm_pasword:
+        if user.password != confirm_password:
             raise HTTPException(status.HTTP_409_CONFLICT, detail= "passwords do not match")
         user_id = len(Users)+1
         new_user=User(id=user_id, **user.model_dump())
@@ -44,16 +45,6 @@ class UserCrud:
             if key in updated_user:
                 updated_user[key] = values
             return updated_user
-        
-    @staticmethod
-    def deactivate_user(user_id:int):
-        deactivated_user = Users.get(user_id)
-        if not deactivated_user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail= "User not found")
-        if deactivated_user["is_active"] != True:
-                raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail= "User is not active")
-        deactivated_user["is_active"] = False
-        return deactivated_user
     
     @staticmethod
     def delete_user(user_id:int):
